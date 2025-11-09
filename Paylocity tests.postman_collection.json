@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "28ace63d-1c48-4061-a4b2-6df632c8d2ac",
+		"name": "Paylocity tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49848723",
+		"_collection_link": "https://angelborja-1756650.postman.co/workspace/Angel-Bo's-Workspace~79d001e8-6598-437a-801d-0ddb50be3584/collection/49848723-28ace63d-1c48-4061-a4b2-6df632c8d2ac?action=share&source=collection_link&creator=49848723"
+	},
+	"item": [
+		{
+			"name": "Create Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let id = response.id;\r",
+							"let firstName = response.firstName;\r",
+							"let lastName = response.lastName;\r",
+							"let dependants = response.dependants;\r",
+							"let salary = response.salary;\r",
+							"let netsalary = response.net;\r",
+							"\r",
+							"pm.collectionVariables.set(\"ID\", id);\r",
+							"pm.collectionVariables.set(\"firstName\", firstName);\r",
+							"pm.collectionVariables.set(\"lastName\", lastName);\r",
+							"pm.collectionVariables.set(\"dependants\", dependants);\r",
+							"pm.collectionVariables.set(\"salary\", salary);\r",
+							"pm.collectionVariables.set(\"netsalary\", netsalary);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response body is as expected\", function () { \r",
+							"    pm.expect(response).to.have.property(\"id\", id);\r",
+							"    pm.expect(response).to.have.property(\"firstName\", firstName);\r",
+							"    pm.expect(response).to.have.property(\"lastName\", lastName);\r",
+							"    pm.expect(response).to.have.property(\"dependants\", dependants);\r",
+							"    pm.expect(response).to.have.property(\"net\", netsalary);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"1094ff73-13fd-4357-9856-29f45e366bc4\",\r\n    \"firstName\": \"TestUser\",\r\n    \"lastName\": \"APICreated\",\r\n    \"dependants\": \"2\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/api/Employees",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let employees = pm.response.json();\r",
+							"let found = false;\r",
+							"\r",
+							"let ID = pm.collectionVariables.get(\"ID\");\r",
+							"\r",
+							"employees.forEach(emp => {\r",
+							"    if (emp.id === ID) {\r",
+							"        found = true;\r",
+							"        \r",
+							"        pm.test(\"First name is correct\", () => {\r",
+							"            pm.expect(emp.firstName, \"did not find the expected first name for the user\").to.eql(pm.collectionVariables.get(\"firstName\"));\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"Last name is correct\", () => {\r",
+							"            pm.expect(emp.lastName, \"did not find the expected last name for the user\").to.eql(pm.collectionVariables.get(\"lastName\"));\r",
+							"        });\r",
+							"        pm.test(\"Dependants value is correct\", () => {\r",
+							"            pm.expect(emp.dependants, \"did not find the expected dependants value for the user\").to.eql(pm.collectionVariables.get(\"dependants\"));\r",
+							"        });\r",
+							"        pm.test(\"Salary is correct\", () => {\r",
+							"            pm.expect(emp.salary, \"did not find the expected salary value for the user\").to.eql(pm.collectionVariables.get(\"salary\"));\r",
+							"        });\r",
+							"        pm.test(\"Net Salary is correct\", () => {\r",
+							"            pm.expect(emp.net, \"did not find the expected last name for the user\").to.eql(pm.collectionVariables.get(\"netsalary\"));\r",
+							"        });                        \r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User exists in employee list\", () => {\r",
+							"    pm.expect(found, \"did not find the user ID in the user list\").to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/Employees",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let dependants = response.dependants;\r",
+							"let firstName = response.firstName;\r",
+							"let lastName = response.lastName;\r",
+							"let netsalary = response.net;\r",
+							"\r",
+							"\r",
+							"pm.collectionVariables.set(\"firstName\", firstName);\r",
+							"pm.collectionVariables.set(\"lastName\", lastName);\r",
+							"pm.collectionVariables.set(\"dependants\", dependants);\r",
+							"pm.collectionVariables.set(\"netsalary\", netsalary);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response body is as expected\", function () { \r",
+							"    pm.expect(response).to.have.property(\"id\", pm.collectionVariables.get(\"ID\"));\r",
+							"    pm.expect(response).to.have.property(\"firstName\", firstName);\r",
+							"    pm.expect(response).to.have.property(\"lastName\", lastName);\r",
+							"    pm.expect(response).to.have.property(\"dependants\", dependants);\r",
+							"    pm.expect(response).to.have.property(\"salary\", pm.collectionVariables.get(\"salary\"));\r",
+							"    pm.expect(response).to.have.property(\"net\", netsalary);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{ID}}\",\r\n    \"firstName\": \"Update2\",\r\n    \"lastName\": \"Updated\",\r\n    \"dependants\": 0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/api/Employees",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response body is as expected\", function () { \r",
+							"    pm.expect(response).to.have.property(\"id\", pm.collectionVariables.get(\"ID\"));\r",
+							"    pm.expect(response).to.have.property(\"firstName\", pm.collectionVariables.get(\"firstName\"));\r",
+							"    pm.expect(response).to.have.property(\"lastName\", pm.collectionVariables.get(\"lastName\"));\r",
+							"    pm.expect(response).to.have.property(\"dependants\", pm.collectionVariables.get(\"dependants\"));\r",
+							"    pm.expect(response).to.have.property(\"salary\", pm.collectionVariables.get(\"salary\"));\r",
+							"    pm.expect(response).to.have.property(\"net\", pm.collectionVariables.get(\"netsalary\"));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/Employees/{{ID}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/Employees/{{ID}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Employee is deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response body is empty\", function () {\r",
+							"    pm.expect(pm.response.text(), \"Expected empty response body\").to.eql(\"\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/Employees/{{ID}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{Auth}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base",
+			"value": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod"
+		},
+		{
+			"key": "Auth",
+			"value": "Basic VGVzdFVzZXI4MzE6WUsrdkE1Oyp3VlRP"
+		},
+		{
+			"key": "ID",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "dependants",
+			"value": ""
+		},
+		{
+			"key": "salary",
+			"value": ""
+		},
+		{
+			"key": "netsalary",
+			"value": ""
+		}
+	]
+}
