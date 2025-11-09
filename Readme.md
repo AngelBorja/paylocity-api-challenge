@@ -5,7 +5,7 @@ This repo contains a Postman collection for testing the Paylocity Benefits API, 
 ### Clone the repository
 ```bash
 git clone https://github.com/AngelBorja/paylocity-api-challenge.git
-cd paylocity-automation-challenge
+cd paylocity-api-challenge
 ```
 ### Setting Required Variables
 This collection uses two required variables:
