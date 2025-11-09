@@ -4,8 +4,8 @@ This repo contains a Postman collection for testing the Paylocity Benefits API, 
 ### How to Run Locally
 #### Setting Required Variables
 This collection uses two required variables:
-- base: the root URL of the API (e.g., https://your-api.com/Prod)
-- Auth: the authentication token or API key (e.g., Bearer your-token)
+- base: the root URL of the API (e.g., "https://apiexamplemadeupsite.com/Prod")
+- Auth: the authentication token or API key (e.g., Bearer "insert token here")
 You can set these in two ways:
 
  ###### Option 1: Set Variables Manually in Postman
@@ -18,17 +18,13 @@ You can set these in two ways:
 ###### Option 2: Pass Variables Inline via npx or newman
 ```bash
 npx newman run "Paylocity tests.postman_collection.json" \
-  --env-var "base=https://your-api.com/Prod" \
-  --env-var "Auth=Bearer your-token" \
+  --env-var "base=https://apiexamplemadeupsite.com/Prod" \
+  --env-var "Auth=Bearer 'insert token here'" \
   --reporters cli,html \
   --reporter-html-export "results.html"
 ```
 
-
 Replace the values with your actual API endpoint and token.
-
-
-
 
 
 #### Option A: Use npx (Recommended — No Global Install Needed)
