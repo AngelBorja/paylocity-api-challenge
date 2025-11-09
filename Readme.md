@@ -3,18 +3,18 @@ This repo contains a Postman collection for testing the Paylocity Benefits API, 
 
 ### How to Run Locally
 #### Option A: Use npx (Recommended — No Global Install Needed)
-'''bash
+```bash
 npx newman run "Paylocity tests.postman_collection.json" --reporters cli,html --reporter-html-export "results.html"
-'''
+```
 
 This works even if you haven’t installed Newman globally. It uses the local version from node_modules.
 
 
 ##### Option B: Install Globally (Optional)
-'''bash
+```bash
 npm install -g newman newman-reporter-html
 newman run "Paylocity tests.postman_collection.json" --reporters cli,html --reporter-html-export "results.html"
-'''
+```
 
 
 ### View Results
