@@ -11,19 +11,14 @@ cd paylocity-api-challenge
 This collection uses two required variables:
 - base: the root URL of the API (e.g., "https://apiexamplemadeupsite.com/Prod")
 - Auth: the authentication token or API key (e.g., Basic "insert token here")
-You can set these in two ways:
 
- #### Option 1: Set Variables Manually in Postman
+ #### Set Variables Manually in Postman
 - Open Postman
 - Go to the Collection → click the three dots → Edit
 - Navigate to the Variables tab
 - Enter values for base and Auth
 - Save the collection
 
-#### Option 2: Pass Variables Inline via npx or newman
-```bash
-npx newman run "Paylocity tests.postman_collection.json"  --env-var "base=https://apiexamplemadeupsite.com/Prod" --env-var "Auth=Basic 'insert token here'" --reporters cli,html --reporter-html-export "results.html"
-```
 
 Replace the values with your actual API endpoint and token.
 
