@@ -375,11 +375,11 @@
 	"variable": [
 		{
 			"key": "base",
-			"value": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod"
+			"value": ""
 		},
 		{
 			"key": "Auth",
-			"value": "Basic VGVzdFVzZXI4MzE6WUsrdkE1Oyp3VlRP"
+			"value": ""
 		},
 		{
 			"key": "ID",
